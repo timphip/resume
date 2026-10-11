@@ -752,7 +752,7 @@
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                 </svg>
-                                Sharing AI
+                                Sharing
                             </a>
                         </li>
                     </ul>
@@ -774,7 +774,7 @@
                 </section>
 
                 <section id="sharing" class="sharing-section">
-                    <h2 class="section-title">Sharing AI</h2>
+                    <h2 class="section-title">Sharing</h2>
                     <div class="content-grid">
                         <details class="content-card">
                             <summary>Teaching Fundamentals</summary>
@@ -880,7 +880,7 @@
 
     <footer class="footer">
         <div class="container">
-            <p>© 2025 Tim Zheng. Powered by curiosity and code.</p>
+            <p>© 2026 Tim Zheng. Powered by curiosity and code.</p>
         </div>
     </footer>
 
@@ -1043,43 +1043,65 @@
             const isPositionAvailable = (x, y) => {
                 return Math.hypot(x - currentX, y - currentY) > 60 &&
                     trail.concat(getAmbientFragments()).every((fragment) =>
-                        Math.hypot(x - fragment.x, y - fragment.y) > 44
+                        Math.hypot(x - fragment.x, y - fragment.y) > 36
                     );
             };
 
-            const createAmbientChain = (delay) => {
+            const createAmbientChain = (delay, direction) => {
                 ambientChains.push({
                     fragments: [],
-                    anchor: null,
-                    nextSpawn: performance.now() + delay
+                    tips: [],
+                    initialDirection: direction,
+                    nextSpawn: performance.now() + delay,
+                    spawned: 0,
+                    maxFragments: 12 + Math.floor(Math.random() * 5)
                 });
             };
 
             const growAmbientFragment = (chain, now) => {
-                let attempts = 0;
-                while (attempts < 24) {
+                if (chain.spawned === 0) {
                     const ambientBounds = getAmbientBounds();
-                    const anchor = chain.anchor || {
+                    chain.tips.push({
                         x: ambientBounds.minX + Math.random() *
                             Math.max(1, ambientBounds.maxX - ambientBounds.minX),
-                        y: 90 + Math.random() * Math.max(1, canvasHeight - 180)
-                    };
-                    const distance = 42 + Math.random() * 10;
-                    const direction = Math.random() * Math.PI * 2;
-                    const x = Math.max(ambientBounds.minX, Math.min(ambientBounds.maxX,
-                        anchor.x + Math.cos(direction) * distance));
-                    const y = Math.max(50, Math.min(canvasHeight - 50,
-                        anchor.y + Math.sin(direction) * distance));
-                    if (isPositionAvailable(x, y)) {
-                        const fragment = createFragment(x, y);
-                        fragment.birth = 0;
-                        chain.fragments.push(fragment);
-                        chain.anchor = { x, y };
-                        break;
-                    }
-                    attempts += 1;
+                        y: 90 + Math.random() * Math.max(1, canvasHeight - 180),
+                        direction: chain.initialDirection
+                    });
                 }
-                chain.nextSpawn = now + 650 + Math.random() * 450;
+
+                const remaining = chain.maxFragments - chain.spawned;
+                const branches = Math.min(
+                    remaining,
+                    chain.spawned === 0 || Math.random() < 0.72 ? 2 : 1
+                );
+                const nextTips = [];
+                for (let branch = 0; branch < branches; branch += 1) {
+                    let attempts = 0;
+                    while (attempts < 24 && chain.tips.length > 0) {
+                        const parent = chain.tips[
+                            Math.floor(Math.random() * chain.tips.length)
+                        ];
+                        const distance = 32 + Math.random() * 10;
+                        const direction = parent.direction +
+                            (Math.random() - 0.5) * 1.7;
+                        const ambientBounds = getAmbientBounds();
+                        const x = Math.max(ambientBounds.minX, Math.min(ambientBounds.maxX,
+                            parent.x + Math.cos(direction) * distance));
+                        const y = Math.max(50, Math.min(canvasHeight - 50,
+                            parent.y + Math.sin(direction) * distance));
+                        if (isPositionAvailable(x, y)) {
+                            const fragment = createFragment(x, y);
+                            fragment.birth = 0;
+                            chain.fragments.push(fragment);
+                            chain.spawned += 1;
+                            nextTips.push({ x, y, direction });
+                            break;
+                        }
+                        attempts += 1;
+                    }
+                }
+                chain.tips = nextTips.length > 0 ? nextTips : chain.tips;
+                chain.nextSpawn = now + 230 + Math.random() * 100;
             };
 
             const animateParticles = () => {
@@ -1087,15 +1109,15 @@
                 const now = performance.now();
 
                 ambientChains.forEach((chain) => {
-                    if (chain.fragments.length < 4 && now >= chain.nextSpawn) {
+                    if (chain.spawned < chain.maxFragments && now >= chain.nextSpawn) {
                         growAmbientFragment(chain, now);
                     }
                 });
 
                 trail.concat(getAmbientFragments()).forEach((fragment) => {
-                    fragment.age += 0.004;
+                    fragment.age += 0.0035;
                     if (fragment.birth < 1) {
-                        fragment.birth = Math.min(1, fragment.birth + 0.035);
+                        fragment.birth = Math.min(1, fragment.birth + 0.08);
                     }
                     if (fragment.age < 1) {
                         drawFragment(fragment);
@@ -1104,6 +1126,14 @@
                 trail.splice(0, trail.length, ...trail.filter((fragment) => fragment.age < 1));
                 ambientChains.forEach((chain) => {
                     chain.fragments = chain.fragments.filter((fragment) => fragment.age < 1);
+                    if (chain.spawned >= chain.maxFragments &&
+                        chain.fragments.length === 0 &&
+                        now >= chain.nextSpawn) {
+                        chain.tips = [];
+                        chain.spawned = 0;
+                        chain.maxFragments = 12 + Math.floor(Math.random() * 5);
+                        chain.nextSpawn = now + 900 + Math.random() * 700;
+                    }
                 });
 
                 requestAnimationFrame(animateParticles);
@@ -1131,9 +1161,10 @@
             resizeCanvas();
             window.addEventListener('resize', resizeCanvas, { passive: true });
             animateParticles();
-            createAmbientChain(900);
-            createAmbientChain(1500);
-            createAmbientChain(2200);
+            createAmbientChain(300, Math.random() * Math.PI * 2);
+            createAmbientChain(800, Math.random() * Math.PI * 2);
+            createAmbientChain(1300, Math.random() * Math.PI * 2);
+            createAmbientChain(1800, Math.random() * Math.PI * 2);
         }
     </script>
 </body>
