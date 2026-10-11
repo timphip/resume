@@ -955,6 +955,7 @@
             let previousY = currentY;
             const canvas = document.querySelector('#particle-canvas');
             const context = canvas.getContext('2d');
+            const mainContent = document.querySelector('.main-content');
             const trail = [];
             const ambientChains = [];
             const trailLength = 7;
@@ -1160,6 +1161,14 @@
             window.addEventListener('pointermove', (event) => {
                 currentX = event.clientX;
                 currentY = event.clientY;
+                const mainBounds = mainContent.getBoundingClientRect();
+                if (currentX < mainBounds.left || currentX > mainBounds.right ||
+                    currentY < mainBounds.top || currentY > mainBounds.bottom) {
+                    trail.length = 0;
+                    previousX = currentX;
+                    previousY = currentY;
+                    return;
+                }
                 const distance = Math.hypot(currentX - previousX, currentY - previousY);
                 if (distance >= 42) {
                     const steps = Math.max(1, Math.floor(distance / 42));
