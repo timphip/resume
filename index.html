@@ -6,7 +6,7 @@
     <title>TimZ</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@1,500;1,600&family=DM+Sans:wght@400;500;700&family=Lato:wght@300;400;500;700;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -15,9 +15,9 @@
         }
 
         :root {
-            --bg-primary: #0a0a0a;
-            --bg-secondary: #1a1a1a;
-            --bg-card: #151515;
+            --bg-primary: #000000;
+            --bg-secondary: #000000;
+            --bg-card: #000000;
             --text-primary: #f5f5f5;
             --text-secondary: #a0a0a0;
             --accent: #00d9ff;
@@ -41,11 +41,18 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: 
-                radial-gradient(circle at 20% 30%, rgba(0, 217, 255, 0.05) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, rgba(255, 107, 157, 0.05) 0%, transparent 50%);
+            background: #000;
             pointer-events: none;
             z-index: 0;
+        }
+
+        #particle-canvas {
+            position: fixed;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
         }
 
         .container {
@@ -78,8 +85,8 @@
             height: 200px;
             border-radius: 50%;
             margin: 0 auto 30px;
-            border: 4px solid var(--accent);
-            box-shadow: 0 0 40px rgba(0, 217, 255, 0.3);
+            border: none;
+            box-shadow: 0 0 40px rgba(0, 217, 255, 0.36);
             animation: float 6s ease-in-out infinite;
             background: var(--bg-card);
             overflow: hidden;
@@ -94,7 +101,7 @@
             transform: translate(-50%, -50%);
             font-size: 64px;
             font-weight: 900;
-            font-family: 'Playfair Display', serif;
+            font-family: 'Lato', sans-serif;
             background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -107,7 +114,7 @@
         }
 
         .profile-name {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Lato', sans-serif;
             font-size: 32px;
             font-weight: 900;
             margin-bottom: 10px;
@@ -125,10 +132,7 @@
         }
 
         .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            margin-bottom: 40px;
+            display: none;
         }
 
         .social-icon {
@@ -194,6 +198,29 @@
             animation: fadeInUp 1s ease;
         }
 
+        .about-card {
+            width: 100%;
+            max-width: 860px;
+            background: rgba(52, 57, 60, 0.62);
+            border: 1px solid rgba(191, 201, 204, 0.22);
+            border-radius: 16px;
+            padding: 30px 34px;
+            backdrop-filter: blur(12px) saturate(75%);
+            -webkit-backdrop-filter: blur(12px) saturate(75%);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07),
+                0 12px 35px rgba(0, 0, 0, 0.18);
+        }
+
+        .about-card p {
+            max-width: 850px;
+            color: var(--text-primary);
+            font-family: 'Cormorant Garamond', Georgia, serif;
+            font-size: 29px;
+            font-style: italic;
+            font-weight: 600;
+            line-height: 1.35;
+        }
+
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -234,12 +261,12 @@
         }
 
         .intro-item strong {
-            color: var(--accent);
+            color: inherit;
             font-weight: 700;
         }
 
         .section-title {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Lato', sans-serif;
             font-size: 42px;
             font-weight: 900;
             margin-bottom: 50px;
@@ -263,6 +290,162 @@
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 30px;
             margin-bottom: 80px;
+        }
+
+        .experience-group {
+            margin-bottom: 70px;
+        }
+
+        .experience-group-title {
+            font-family: 'Lato', sans-serif;
+            font-size: 28px;
+            margin-bottom: 24px;
+        }
+
+        .experience-list {
+            display: grid;
+            gap: 16px;
+            width: 100%;
+            max-width: 860px;
+        }
+
+        .experience-card {
+            background: rgba(52, 57, 60, 0.62);
+            border: 1px solid rgba(164, 174, 178, 0.28);
+            border-radius: 16px;
+            padding: 26px 30px;
+            display: grid;
+            grid-template-columns: 58px 1fr;
+            gap: 20px;
+            align-items: center;
+            -webkit-backdrop-filter: blur(12px) saturate(75%);
+            backdrop-filter: blur(12px) saturate(75%);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08),
+                0 12px 35px rgba(0, 0, 0, 0.18);
+            transition: background 0.35s ease, border-color 0.35s ease,
+                box-shadow 0.35s ease, transform 0.35s ease;
+        }
+
+        .school-badge {
+            width: 58px;
+            height: 58px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #ffffff;
+            border-radius: 16px;
+            background: #ffffff;
+            color: #bdbdbd;
+            font-family: 'Lato', sans-serif;
+            font-size: 18px;
+            font-weight: 900;
+            letter-spacing: -0.04em;
+            overflow: hidden;
+        }
+
+        .school-badge img {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            object-fit: contain;
+            object-position: center;
+            border-radius: 15px;
+        }
+
+        .school-badge .logo-gmu {
+            object-fit: cover;
+            transform: translate(4px, 2.8px) scale(1.12);
+        }
+
+        .school-badge:has(.logo-gmu) {
+            border-color: #0b6b3a;
+            background: #0b6b3a;
+        }
+
+        .school-badge .logo-queensland {
+            object-position: 50% 50%;
+            transform: translate(2.7px, 1.5px) scale(1.35);
+        }
+
+        .school-badge .logo-waterloo {
+            object-position: 50% 50%;
+            transform: translate(6px, 5px) scale(1.7);
+        }
+
+        .experience-card:hover {
+            background: rgba(67, 73, 76, 0.68);
+            border-color: rgba(191, 201, 204, 0.42);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.12),
+                0 16px 40px rgba(0, 0, 0, 0.24);
+            transform: translateY(-3px);
+        }
+
+        .experience-card h4 {
+            font-family: 'Lato', sans-serif;
+            font-size: 21px;
+            margin-bottom: 8px;
+        }
+
+        .experience-label {
+            color: #4f7cff;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            margin-bottom: 7px;
+        }
+
+        .experience-period {
+            color: #858585;
+            font-size: 13px;
+            letter-spacing: 0.04em;
+            margin-bottom: 10px;
+        }
+
+        .experience-description {
+            list-style: none;
+            display: grid;
+            gap: 7px;
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        .experience-description li {
+            position: relative;
+            padding-left: 18px;
+        }
+
+        .experience-description li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: #4f7cff;
+            font-weight: 700;
+        }
+
+        .experience-advisor {
+            color: var(--text-secondary);
+            font-size: 14px;
+            margin-top: 14px;
+        }
+
+        @media (max-width: 640px) {
+            .experience-card {
+                grid-template-columns: 48px 1fr;
+                gap: 14px;
+                padding: 20px;
+            }
+
+            .school-badge {
+                width: 48px;
+                height: 48px;
+                border-radius: 15px;
+                font-size: 15px;
+            }
+
+            .school-badge img {
+                border-radius: 12px;
+            }
         }
 
         .project-card {
@@ -349,16 +532,19 @@
 
         .content-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
+            gap: 10px;
+            max-width: 860px;
         }
 
         .content-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border);
-            border-radius: 12px;
+            background: rgba(52, 57, 60, 0.62);
+            border: 1px solid rgba(191, 201, 204, 0.22);
+            border-radius: 8px;
             overflow: hidden;
-            transition: all 0.3s ease;
+            backdrop-filter: blur(12px) saturate(75%);
+            -webkit-backdrop-filter: blur(12px) saturate(75%);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06),
+                0 10px 28px rgba(0, 0, 0, 0.16);
             animation: fadeInUp 0.8s ease backwards;
         }
 
@@ -366,37 +552,55 @@
         .content-card:nth-child(2) { animation-delay: 0.2s; }
         .content-card:nth-child(3) { animation-delay: 0.3s; }
 
-        .content-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--accent-secondary);
-            box-shadow: 0 15px 40px rgba(255, 107, 157, 0.2);
+        .content-card[open] {
+            border-color: rgba(0, 217, 255, 0.42);
         }
 
-        .content-image {
-            width: 100%;
-            height: 180px;
-            background: linear-gradient(135deg, var(--bg-secondary), var(--bg-card));
+        .content-card summary {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 48px;
-            border-bottom: 1px solid var(--border);
+            min-height: 64px;
+            padding: 0 24px;
+            cursor: pointer;
+            list-style: none;
+            font-family: 'Lato', sans-serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .content-card summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .content-card summary::before {
+            content: '+';
+            width: 24px;
+            margin-right: 10px;
+            color: var(--accent);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 27px;
+            font-weight: 400;
+            line-height: 1;
+        }
+
+        .content-card[open] summary::before {
+            content: '−';
         }
 
         .content-body {
-            padding: 20px;
+            padding: 0 24px 24px 58px;
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.7;
         }
 
         .content-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: var(--text-primary);
-            margin-bottom: 8px;
+            display: none;
         }
 
         .content-meta {
-            font-size: 13px;
-            color: var(--text-secondary);
+            margin: 0;
         }
 
         /* Responsive Design */
@@ -481,6 +685,7 @@
     </style>
 </head>
 <body>
+    <canvas id="particle-canvas" aria-hidden="true"></canvas>
     <div class="container">
         <div class="hero">
             <!-- Profile Sidebar -->
@@ -489,7 +694,7 @@
                     <img src="./data/0.png" alt="Profile Image" style="width: 100%; height: 100%; object-fit: cover; object-position: 65% 25%;">
                 </div>
                 <h1 class="profile-name">Tim Zheng</h1>
-                <p class="profile-tagline">Algorithms & System Co-design</p>
+                <p class="profile-tagline">yt209241 [AT] dal [DOT] ca</p>
                 
                 <div class="social-links">
                     <a href="https://ca.linkedin.com/in/tim-zheng-026211294" class="social-icon" aria-label="LinkedIn">
@@ -518,28 +723,19 @@
                 <nav>
                     <ul class="nav-menu">
                         <li class="nav-item">
-                            <a href="#home" class="nav-link active">
+                            <a href="#about" class="nav-link active">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
                                 </svg>
-                                Home
+                                About
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#projects" class="nav-link">
-                                <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                    <line x1="9" y1="9" x2="15" y2="9"></line>
-                                </svg>
-                                Projects
-                            </a>
-                        </li>
-                        <li class="nav-item">
-                            <a href="#sharing" class="nav-link">
+                            <a href="#experience" class="nav-link">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                 </svg>
-                                Sharing
+                                Experience & Education
                             </a>
                         </li>
                     </ul>
@@ -548,97 +744,121 @@
 
             <!-- Main Content -->
             <main class="main-content">
-                <section id="home" class="intro-section">
-                    <ul class="intro-list">
-                        <li class="intro-item">
-                            <span>Currently <strong>Bachelor of Computer Science</strong> with Statistics minor at Dalhousie University.</span>
-                        </li>
-                        <li class="intro-item">
-                            <span>Research Intern: </span>
-                            <span>George Mason University</span>
-                            <span>University of Waterloo</span>
-                            <span>Shanghai JiaoTong University</span>
-                            <span>The University of Queensland</span>
-                        </li>
-                        <li class="intro-item">
-                            <span>Technical expertise in <strong>PyTorch, OpenCV, Multimodal LLMs</strong>, with deep focus on AI-related technologies and vision systems.</span>
-                        </li>
-                        <li class="intro-item">
-                            <span>Passionate about <strong>sharing knowledge</strong> across platforms and building AI-powered solutions that make a difference.</span>
-                        </li>
-                    </ul>
-                </section>
-
-                <section id="projects">
-                    <h2 class="section-title">AI Projects</h2>
-                    <div class="projects-grid">
-                        <div class="project-card">
-                            <div class="project-icon">🤖</div>
-                            <h3 class="project-title">Multimodal World Models</h3>
-                            <p class="project-description">
-                                Advanced research on geometric consistency in multimodal systems using Optical Flow and Homography Estimation. Investigating visual input optimization in post-training algorithms for world model architectures.
-                            </p>
-                            <div class="project-stats">Research Project</div>
-                        </div>
-
-                        <div class="project-card">
-                            <div class="project-icon">💙</div>
-                            <h3 class="project-title">The Sentiment Compass</h3>
-                            <p class="project-description">
-                                AI-Powered Suicide Prevention System featuring fine-tuned DistilBERT deployed via Electron for real-time NLP inference. A compassionate application of deep learning for mental health support.
-                            </p>
-                            <div class="project-stats">Production Deploy</div>
-                        </div>
-
-                        <div class="project-card">
-                            <div class="project-icon">🎓</div>
-                            <h3 class="project-title">Deep Learning Mastery</h3>
-                            <p class="project-description">
-                                Self-driven study through Stanford's CS231N (Computer Vision), CS231A (3D Reconstruction), CS224N (NLP), and EE263 (Matrix Methods). Building comprehensive foundations in modern AI architectures.
-                            </p>
-                            <div class="project-stats">Continuous Learning</div>
-                        </div>
+                <section id="about" class="intro-section">
+                    <h2 class="section-title">About</h2>
+                    <div class="about-card">
+                        <p>Hello, I'm a student focused on Machine Learning research, currently exploring visual algorithms and systems security. I am also interested in introductory algorithms for Quantitative Finance.</p>
                     </div>
                 </section>
 
                 <section id="sharing" class="sharing-section">
                     <h2 class="section-title">Sharing AI</h2>
                     <div class="content-grid">
+                        <details class="content-card">
+                            <summary>Teaching Fundamentals</summary>
+                            <div class="content-body">
+                                <p class="content-meta">1234</p>
+                            </div>
+                        </details>
 
-                        <a href="https://timphip.github.io/X/" style="text-decoration: none; color: inherit;">
-                            <div class="content-card">
-                                <div class="content-image">🧠</div>
-                                <div class="content-body">
-                                    <h3 class="content-title">Teaching Fundamentals</h3>
-                                    <p class="content-meta">Computer systems, Python, and foundational CS concepts for learners</p>
+                        <details class="content-card">
+                            <summary>Technical Deep Dives</summary>
+                            <div class="content-body">
+                                <p class="content-meta">1234</p>
+                            </div>
+                        </details>
+
+                        <details class="content-card">
+                            <summary>AI Implementation Guides</summary>
+                            <div class="content-body">
+                                <p class="content-meta">1234</p>
+                            </div>
+                        </details>
+                    </div>
+                </section>
+
+                <section id="experience">
+                    <div class="experience-group">
+                        <h2 class="section-title">Education</h2>
+                        <div class="experience-list">
+                            <article class="experience-card">
+                                <div class="school-badge">
+                                    <img src="./data/dalhousie.png" alt="Dalhousie University logo">
                                 </div>
-                            </div>
-                        </a>
-                        
-                        <div class="content-card">
-                            <div class="content-image">📚</div>
-                            <div class="content-body">
-                                <h3 class="content-title">Technical Deep Dives</h3>
-                                <p class="content-meta">Exploring computer vision, multimodal learning, and AI architectures</p>
-                            </div>
+                                <div>
+                                    <h4>Dalhousie University</h4>
+                                    <div class="experience-period">Halifax, Canada · 2022 — Present</div>
+                                    <p>Bachelor of Computer Science, Minor in Statistics</p>
+                                </div>
+                            </article>
                         </div>
-
-                        <div class="content-card">
-                            <div class="content-image">⚡</div>
-                            <div class="content-body">
-                                <h3 class="content-title">AI Implementation Guides</h3>
-                                <p class="content-meta">Practical guides on PyTorch, OpenCV, and modern ML frameworks</p>
-                            </div>
+                    </div>
+                    <div class="experience-group">
+                        <h2 class="section-title">Experience</h2>
+                        <div class="experience-list">
+                            <article class="experience-card">
+                                <div class="school-badge">
+                                    <img class="logo-gmu" src="./data/GMU.png" alt="George Mason University logo">
+                                </div>
+                                <div>
+                                    <div class="experience-label">Research Intern</div>
+                                    <h4>George Mason University</h4>
+                                    <div class="experience-period">Fairfax, USA · 2026.7 — Present</div>
+                                    <ul class="experience-description">
+                                        <li>Research on training-free defenses against quantization-triggered backdoors in large language models, with reproducible evaluations across code-generation models.</li>
+                                    </ul>
+                                </div>
+                            </article>
+                            <article class="experience-card">
+                                <div class="school-badge">
+                                    <img class="logo-waterloo" src="./data/waterloo.png" alt="University of Waterloo logo">
+                                </div>
+                                <div>
+                                    <div class="experience-label">Research Intern</div>
+                                    <h4>University of Waterloo</h4>
+                                    <div class="experience-period">Waterloo, Canada · 2026.6 — 2026.9</div>
+                                    <ul class="experience-description">
+                                        <li>Research on task-conditioned J-space representations for understanding agent tool behavior and detecting prompt-injection-driven deviations from user intent.</li>
+                                    </ul>
+                                </div>
+                            </article>
+                            <article class="experience-card">
+                                <div class="school-badge">
+                                    <img src="./data/shanghaijiaotong.png" alt="Shanghai Jiao Tong University logo">
+                                </div>
+                                <div>
+                                    <div class="experience-label">Research Intern</div>
+                                    <h4>Shanghai Jiao Tong University</h4>
+                                    <div class="experience-period">Shanghai, China · 2026.1 — 2026.6</div>
+                                    <ul class="experience-description">
+                                        <li>Developed a physics-inspired Wave3D video super-resolution model that combines wave-based dynamics with spatiotemporal feature processing to reconstruct high-resolution video.</li>
+                                    </ul>
+                                </div>
+                            </article>
+                            <article class="experience-card">
+                                <div class="school-badge">
+                                    <img class="logo-queensland" src="./data/QU.png" alt="The University of Queensland logo">
+                                </div>
+                                <div>
+                                    <div class="experience-label">Research Intern</div>
+                                    <h4>The University of Queensland</h4>
+                                    <div class="experience-period">Brisbane, Australia · 2025.4 — 2025.12</div>
+                                    <ul class="experience-description">
+                                        <li>Research on multimodal world models and post-training methods for optimizing visual inputs and improving geometric consistency.</li>
+                                    </ul>
+                                </div>
+                            </article>
                         </div>
                     </div>
                 </section>
+
             </main>
         </div>
     </div>
 
     <footer class="footer">
         <div class="container">
-            <p>© 2025 Tim Zheng. Builder & Sharer in AI/ML. Powered by curiosity and code.</p>
+            <p>© 2025 Tim Zheng. Powered by curiosity and code.</p>
         </div>
     </footer>
 
@@ -685,6 +905,214 @@
             scrollY = window.scrollY;
             document.body.style.setProperty('--scroll', scrollY);
         });
+
+        // Draw a short trail of blue mineral fragments behind the pointer.
+        if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+            window.matchMedia('(pointer: fine)').matches) {
+            let currentX = window.innerWidth / 2;
+            let currentY = window.innerHeight / 2;
+            let previousX = currentX;
+            let previousY = currentY;
+            const canvas = document.querySelector('#particle-canvas');
+            const context = canvas.getContext('2d');
+            const trail = [];
+            const ambientChains = [];
+            const trailLength = 7;
+            const fragmentShapes = [
+                [
+                    [-0.78, -1.24], [0.02, -1.02], [0.64, -0.18],
+                    [0.28, 1.12], [-0.46, 1.2], [-0.9, 0.12]
+                ],
+                [
+                    [-0.98, -0.62], [-0.34, -1.2], [0.76, -0.58],
+                    [0.9, 0.28], [0.08, 1.22], [-0.82, 0.78]
+                ],
+                [
+                    [-0.42, -1.18], [0.62, -0.72], [0.86, 0.28],
+                    [0.18, 1.08], [-0.62, 0.82], [-0.92, -0.12]
+                ],
+                [
+                    [-0.78, -1.02], [0.24, -1.12], [0.9, -0.02],
+                    [0.46, 1.08], [-0.44, 0.8], [-0.92, 0.12]
+                ]
+            ];
+            const openingTransforms = [
+                { scaleX: 1, scaleY: 1 },
+                { scaleX: -1, scaleY: 1 },
+                { scaleX: 1, scaleY: -1 }
+            ];
+            let fragmentSequence = 0;
+            let canvasWidth = 0;
+            let canvasHeight = 0;
+            const getAmbientBounds = () => {
+                const hasFixedSidebar = window.matchMedia('(min-width: 969px)').matches;
+                return {
+                    minX: hasFixedSidebar ? Math.min(canvasWidth - 100, 400) : 50,
+                    maxX: canvasWidth - 50
+                };
+            };
+
+            const resizeCanvas = () => {
+                const pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+                canvasWidth = window.innerWidth;
+                canvasHeight = window.innerHeight;
+                canvas.width = canvasWidth * pixelRatio;
+                canvas.height = canvasHeight * pixelRatio;
+                canvas.style.width = `${canvasWidth}px`;
+                canvas.style.height = `${canvasHeight}px`;
+                context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+            };
+
+            const drawFragment = (fragment) => {
+                const fadeOut = Math.pow(1 - fragment.age, 1.8);
+                const fadeIn = Math.min(1, fragment.birth);
+                const fade = fadeIn * fadeOut;
+                const halfSize = fragment.size / 2;
+                const gradient = context.createLinearGradient(
+                    -halfSize,
+                    -halfSize,
+                    halfSize,
+                    halfSize
+                );
+                gradient.addColorStop(0, `rgba(0, 190, 245, ${0.98 * fade})`);
+                gradient.addColorStop(0.55, `rgba(0, 125, 176, ${0.82 * fade})`);
+                gradient.addColorStop(1, `rgba(0, 54, 82, ${0.56 * fade})`);
+
+                context.save();
+                context.translate(fragment.x, fragment.y);
+                context.scale(fragment.scaleX, fragment.scaleY);
+                context.beginPath();
+                fragment.points.forEach((point, index) => {
+                    const x = point[0] * halfSize * fragment.widthScale;
+                    const y = point[1] * halfSize * fragment.heightScale;
+                    if (index === 0) {
+                        context.moveTo(x, y);
+                    } else {
+                        context.lineTo(x, y);
+                    }
+                });
+                context.closePath();
+                context.fillStyle = gradient;
+                context.fill();
+                context.restore();
+            };
+
+            const createFragment = (x, y) => {
+                const shapeIndex = fragmentSequence % fragmentShapes.length;
+                const transform = openingTransforms[fragmentSequence % openingTransforms.length];
+                fragmentSequence += 1;
+                return {
+                    x,
+                    y,
+                    size: 36 + Math.random() * 7,
+                    widthScale: 0.88 + Math.random() * 0.1,
+                    heightScale: 1.38 + Math.random() * 0.12,
+                    points: fragmentShapes[shapeIndex],
+                    scaleX: transform.scaleX,
+                    scaleY: transform.scaleY,
+                    birth: 1,
+                    age: 0
+                };
+            };
+
+            const getAmbientFragments = () =>
+                ambientChains.flatMap((chain) => chain.fragments);
+
+            const isPositionAvailable = (x, y) => {
+                return Math.hypot(x - currentX, y - currentY) > 60 &&
+                    trail.concat(getAmbientFragments()).every((fragment) =>
+                        Math.hypot(x - fragment.x, y - fragment.y) > 44
+                    );
+            };
+
+            const createAmbientChain = (delay) => {
+                ambientChains.push({
+                    fragments: [],
+                    anchor: null,
+                    nextSpawn: performance.now() + delay
+                });
+            };
+
+            const growAmbientFragment = (chain, now) => {
+                let attempts = 0;
+                while (attempts < 24) {
+                    const ambientBounds = getAmbientBounds();
+                    const anchor = chain.anchor || {
+                        x: ambientBounds.minX + Math.random() *
+                            Math.max(1, ambientBounds.maxX - ambientBounds.minX),
+                        y: 90 + Math.random() * Math.max(1, canvasHeight - 180)
+                    };
+                    const distance = 42 + Math.random() * 10;
+                    const direction = Math.random() * Math.PI * 2;
+                    const x = Math.max(ambientBounds.minX, Math.min(ambientBounds.maxX,
+                        anchor.x + Math.cos(direction) * distance));
+                    const y = Math.max(50, Math.min(canvasHeight - 50,
+                        anchor.y + Math.sin(direction) * distance));
+                    if (isPositionAvailable(x, y)) {
+                        const fragment = createFragment(x, y);
+                        fragment.birth = 0;
+                        chain.fragments.push(fragment);
+                        chain.anchor = { x, y };
+                        break;
+                    }
+                    attempts += 1;
+                }
+                chain.nextSpawn = now + 650 + Math.random() * 450;
+            };
+
+            const animateParticles = () => {
+                context.clearRect(0, 0, canvasWidth, canvasHeight);
+                const now = performance.now();
+
+                ambientChains.forEach((chain) => {
+                    if (chain.fragments.length < 4 && now >= chain.nextSpawn) {
+                        growAmbientFragment(chain, now);
+                    }
+                });
+
+                trail.concat(getAmbientFragments()).forEach((fragment) => {
+                    fragment.age += 0.004;
+                    if (fragment.birth < 1) {
+                        fragment.birth = Math.min(1, fragment.birth + 0.035);
+                    }
+                    if (fragment.age < 1) {
+                        drawFragment(fragment);
+                    }
+                });
+                trail.splice(0, trail.length, ...trail.filter((fragment) => fragment.age < 1));
+                ambientChains.forEach((chain) => {
+                    chain.fragments = chain.fragments.filter((fragment) => fragment.age < 1);
+                });
+
+                requestAnimationFrame(animateParticles);
+            };
+
+            window.addEventListener('pointermove', (event) => {
+                currentX = event.clientX;
+                currentY = event.clientY;
+                const distance = Math.hypot(currentX - previousX, currentY - previousY);
+                if (distance >= 42) {
+                    const steps = Math.max(1, Math.floor(distance / 42));
+                    for (let step = 1; step <= steps; step += 1) {
+                        const progress = step / steps;
+                        trail.push(createFragment(
+                            previousX + (currentX - previousX) * progress,
+                            previousY + (currentY - previousY) * progress
+                        ));
+                    }
+                    trail.splice(0, Math.max(0, trail.length - trailLength));
+                    previousX = currentX;
+                    previousY = currentY;
+                }
+            }, { passive: true });
+            resizeCanvas();
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas, { passive: true });
+            animateParticles();
+            createAmbientChain(900);
+            createAmbientChain(1500);
+            createAmbientChain(2200);
+        }
     </script>
 </body>
 </html>
