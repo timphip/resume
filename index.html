@@ -75,9 +75,12 @@
 
         /* Profile Sidebar */
         .profile-sidebar {
-            position: sticky;
-            top: 80px;
+            position: fixed;
+            left: max(20px, calc((100vw - 1400px) / 2 + 20px));
+            top: 40px;
+            width: 280px;
             text-align: center;
+            z-index: 2;
         }
 
         .profile-image {
@@ -190,6 +193,7 @@
 
         /* Main Content */
         .main-content {
+            grid-column: 2;
             padding-bottom: 80px;
         }
 
@@ -619,9 +623,15 @@
                 padding: 40px 0;
             }
 
+            .main-content {
+                grid-column: auto;
+            }
+
             .profile-sidebar {
                 position: relative;
+                left: auto;
                 top: 0;
+                width: auto;
             }
 
             .profile-image {
@@ -776,7 +786,6 @@
                     </ul>
                 </nav>
             </aside>
-
             <!-- Main Content -->
             <main class="main-content">
                 <section id="about" class="intro-section">
@@ -939,12 +948,36 @@
             observer.observe(el);
         });
 
+        const updateActiveNav = () => {
+            const marker = window.innerHeight * 0.3;
+            let activeLink = document.querySelector('.nav-link[href="#about"]');
+            let closestTop = -Infinity;
+
+            document.querySelectorAll('.nav-link').forEach(link => {
+                const target = document.querySelector(link.getAttribute('href'));
+                if (!target) {
+                    return;
+                }
+                const top = target.getBoundingClientRect().top;
+                if (top <= marker && top > closestTop) {
+                    closestTop = top;
+                    activeLink = link;
+                }
+            });
+
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.toggle('active', link === activeLink);
+            });
+        };
+
         // Add parallax effect to background
         let scrollY = 0;
         window.addEventListener('scroll', () => {
             scrollY = window.scrollY;
             document.body.style.setProperty('--scroll', scrollY);
+            updateActiveNav();
         });
+        updateActiveNav();
 
         // Draw a short trail of blue mineral fragments behind the pointer.
         if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
@@ -988,7 +1021,7 @@
             const getAmbientBounds = () => {
                 const hasFixedSidebar = window.matchMedia('(min-width: 969px)').matches;
                 return {
-                    minX: hasFixedSidebar ? Math.min(canvasWidth - 100, 400) : 50,
+                    minX: hasFixedSidebar ? Math.min(canvasWidth - 100, 430) : 50,
                     maxX: canvasWidth - 50
                 };
             };
