@@ -12,8 +12,6 @@
 ### 🔬 Who Am I?
 I am a Computer Science student at Dalhousie University with a minor in Statistics, focused on machine learning and computer vision research. I enjoy working from first principles—from understanding model representations and post-training methods to incorporating physical inductive biases into neural networks.
 
-My research interests span multimodal world models, geometric consistency, efficient visual computing, and trustworthy AI systems. I am also interested in optimization and the mathematical foundations behind modern learning algorithms.
-
 
 ### 🛠️ Technical Arsenal
 
