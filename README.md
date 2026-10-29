@@ -14,21 +14,6 @@ I am a Computer Science student at Dalhousie University with a minor in Statisti
 
 My research interests span multimodal world models, geometric consistency, efficient visual computing, and trustworthy AI systems. I am also interested in optimization and the mathematical foundations behind modern learning algorithms.
 
-<br/>
-
-### 🔭 Currently Exploring & Building
-- 🌌 **Multimodal World Models:** Studying visual representations, optical flow, homography, and geometric consistency for embodied and interactive systems.
-- ⚛️ **Physics-Inspired Deep Learning:** Designing models that use physical dynamics and spatiotemporal structure to improve video understanding and super-resolution.
-- 🛡️ **Trustworthy AI Agents:** Exploring task-conditioned representations for understanding tool use and detecting deviations from user intent.
-
-<br/>
-
-### 🧪 Selected Research
-- **Multimodal post-training:** Investigating ways to optimize visual inputs and improve the geometric consistency of world models.
-- **Physics-inspired video restoration:** Developing Wave3D, a wave-based video super-resolution approach that combines physical dynamics with spatiotemporal feature processing.
-- **Agent behavior and safety:** Studying J-space representations for analyzing tool behavior and prompt-injection-driven deviations.
-
-<br/>
 
 ### 🛠️ Technical Arsenal
 
