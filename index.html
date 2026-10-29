@@ -77,17 +77,17 @@
         .profile-sidebar {
             position: fixed;
             left: max(20px, calc((100vw - 1400px) / 2 + 20px));
-            top: 40px;
+            top: 28px;
             width: 280px;
             text-align: center;
             z-index: 2;
         }
 
         .profile-image {
-            width: 200px;
-            height: 200px;
+            width: 174px;
+            height: 174px;
             border-radius: 50%;
-            margin: 0 auto 30px;
+            margin: 0 auto 22px;
             border: none;
             box-shadow: 0 0 40px rgba(0, 217, 255, 0.36);
             animation: float 6s ease-in-out infinite;
@@ -529,8 +529,8 @@
             font-size: 16px;
         }
 
-        /* Sharing Section */
-        .sharing-section {
+        /* Projects Section */
+        .projects-section {
             margin-bottom: 80px;
         }
 
@@ -540,6 +540,24 @@
 
         .news-card {
             min-height: 96px;
+        }
+
+        .news-card p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 400;
+        }
+
+        .news-card p::before {
+            content: '📣';
+            flex-shrink: 0;
+            font-family: 'Apple Color Emoji', 'Segoe UI Emoji', sans-serif;
+            font-size: 21px;
+            line-height: 1;
         }
 
         .content-grid {
@@ -605,6 +623,36 @@
             color: var(--text-secondary);
             font-size: 16px;
             line-height: 1.7;
+        }
+
+        .content-body p {
+            margin-bottom: 14px;
+        }
+
+        .content-body p:last-child {
+            margin-bottom: 0;
+        }
+
+        .project-gallery {
+            width: 100%;
+            margin-bottom: 18px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .project-gallery img {
+            width: calc((100% - 20px) / 3);
+            aspect-ratio: 4 / 3;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 1px solid rgba(191, 201, 204, 0.22);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .project-gallery img:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
         }
 
         .content-title {
@@ -772,11 +820,11 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="#sharing" class="nav-link">
+                            <a href="#projects" class="nav-link">
                                 <svg class="nav-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
                                 </svg>
-                                Sharing
+                                Projects
                             </a>
                         </li>
                         <li class="nav-item">
@@ -805,26 +853,54 @@
                 <section id="about" class="intro-section">
                     <h2 class="section-title">About</h2>
                     <div class="about-card">
-                        <p>Hello, I'm a student focused on Machine Learning research, currently exploring visual algorithms and systems security. I am also interested in introductory algorithms for Quantitative Finance.</p>
+                        <p>Hello, I'm a student focused on Machine Learning research, currently exploring visual algorithms and systems security.</p>
                     </div>
                 </section>
 
                 <section id="news" class="news-section">
                     <h2 class="section-title">News</h2>
-                    <div class="about-card news-card"></div>
+                    <div class="about-card news-card">
+                        <p>Currently trying to participate in the Muse Spark OpenKernel Challenge.</p>
+                    </div>
                 </section>
 
-                <section id="sharing" class="sharing-section">
-                    <h2 class="section-title">Sharing</h2>
+                <section id="projects" class="projects-section">
+                    <h2 class="section-title">Projects</h2>
                     <div class="content-grid">
                         <details class="content-card">
-                            <summary>AI Implementation Guides</summary>
-                            <div class="content-body"></div>
+                            <summary>Complexity Science × AI: Mathematical and Data Perspectives</summary>
+                            <div class="content-body">
+                                <div class="project-gallery">
+                                    <img src="./data/six1.jpg" alt="Discussion on complexity science and AI at a Shanghai event">
+                                    <img src="./data/six2.jpg" alt="Group discussion on mathematical and data perspectives of AI">
+                                </div>
+                                <p class="content-meta">June 6, 2026 · Discussion with Professor Xiaoyang Chen, Tongji University</p>
+                                <p>Examined AI through the lens of complexity science, focusing on emergence, self-organization, collective intelligence, adaptive systems, and the use of mathematical modeling and data-driven methods to analyze complex phenomena.</p>
+                            </div>
                         </details>
 
                         <details class="content-card">
-                            <summary>Technical Deep Dives</summary>
-                            <div class="content-body"></div>
+                            <summary>EEG-Based Brain-Computer Interface Control System</summary>
+                            <div class="content-body">
+                                <div class="project-gallery">
+                                    <img src="./data/BCI1.jpg" alt="EEG headset recording during the brain-computer interface project">
+                                    <img src="./data/BCI2.jpg" alt="Robotic control hardware used in the EEG brain-computer interface project">
+                                    <img src="./data/BCI3.jpg" alt="EEG setup and project demonstration">
+                                </div>
+                                <p class="content-meta">March 2026 · 1st Place, Application Track, Neuro-Hackathon (Surge Innovation)</p>
+                                <p>Engineered a real-time EEG-based BCI that translates emotional fluctuations from raw time-domain signals into four-way directional controls using a deterministic threshold algorithm.</p>
+                                <p>Demonstrated the low-latency feasibility of lightweight signal-processing pipelines over ML models under strict time constraints.</p>
+                            </div>
+                        </details>
+
+                        <details class="content-card">
+                            <summary>Nearest Correlation Matrix Benchmark — CVXPY Contribution</summary>
+                            <div class="content-body">
+                                <p class="content-meta">February 2026 · CVXPY SDP Benchmark Contribution, Stanford Convex Optimization Hackathon</p>
+                                <p>Designed a semidefinite programming benchmark with PSD constraints, seeded data generation, and JSONL benchmark results. Built a factory-registered evaluation pipeline comparing SCS, CLARABEL, and CVXOPT.</p>
+                                <p>The contribution was merged into the official CVXPY benchmark suite during the Stanford Convex Optimization Hackathon.</p>
+                                <p><a href="https://github.com/timphip/solver_benchmarks/blob/main/src/solver_benchmarks/problems/finance_ncm.py">Implementation</a></p>
+                            </div>
                         </details>
                     </div>
                 </section>
