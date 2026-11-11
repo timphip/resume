@@ -771,6 +771,32 @@
             font-size: 14px;
         }
 
+        .visitors-section {
+            margin-top: 64px;
+        }
+
+        .visitors-card {
+            width: 100%;
+            max-width: 860px;
+            padding: 24px;
+            background: rgba(52, 57, 60, 0.62);
+            border: 1px solid rgba(191, 201, 204, 0.22);
+            border-radius: 16px;
+            text-align: center;
+            backdrop-filter: blur(12px) saturate(75%);
+            -webkit-backdrop-filter: blur(12px) saturate(75%);
+            box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07),
+                0 12px 35px rgba(0, 0, 0, 0.18);
+        }
+
+        .visitors-card img {
+            display: block;
+            width: 270px;
+            max-width: 100%;
+            height: auto;
+            margin: 0 auto;
+        }
+
     </style>
 </head>
 <body>
@@ -983,6 +1009,15 @@
                                 </div>
                             </article>
                         </div>
+                    </div>
+                </section>
+
+                <section id="visitors" class="visitors-section">
+                    <h2 class="section-title">My Visitors</h2>
+                    <div class="visitors-card">
+                        <a href="https://mapmyvisitors.com/web/1c9fg" title="View visitor statistics">
+                            <img src="https://mapmyvisitors.com/map.png?d=oqc3ckXuYRgsWbh8O0yuhMhZImc_hlsBofyILAUydW8&cl=ffffff" alt="Map showing website visitors">
+                        </a>
                     </div>
                 </section>
 
